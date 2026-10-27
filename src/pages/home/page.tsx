@@ -240,14 +240,8 @@ export default function Home() {
             </h1>
             <div className="flex flex-wrap gap-3">
               <Link
-                to="/shop?kategorija=49"
-                className="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 py-3 rounded-lg transition-all text-[13px] whitespace-nowrap tracking-wide"
-              >
-                ATV Kvad za odrasle
-              </Link>
-              <Link
                 to="/shop?kategorija=37"
-                className="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-lg transition-all text-[13px] whitespace-nowrap tracking-wide border border-white/30"
+                className="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 py-3 rounded-lg transition-all text-[13px] whitespace-nowrap tracking-wide"
               >
                 Kvadovi za decu
               </Link>
