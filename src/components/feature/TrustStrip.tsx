@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 const trustItems = [
-  { icon: 'ri-truck-line', text: 'Besplatna dostava preko 50.000 RSD' },
+  { icon: 'ri-truck-line', text: 'Dostava širom Srbije' },
   { icon: 'ri-hand-coin-line', text: 'Plaćanje pouzećem' },
   { icon: 'ri-shield-check-line', text: 'Garancija do 2 godine' },
   { icon: 'ri-tools-line', text: 'Servis i rezervni delovi' },

@@ -51,7 +51,7 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <span className="flex items-center gap-1.5">
             <i className="ri-truck-line" />
-            Besplatna dostava za porudžbine preko 50.000 RSD
+            Dostava širom Srbije
           </span>
           <span className="flex items-center gap-1.5">
             <i className="ri-hand-coin-line" />

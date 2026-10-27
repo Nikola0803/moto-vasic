@@ -120,29 +120,39 @@ export default function Shop() {
     fetchProducts();
   }, [fetchProducts]);
 
+  const catSEOText: Record<string, { h2: string; body: string }> = {
+    '36': { h2: 'Kros motori za decu — off-road zabava od 6. godine', body: 'Dečiji kros motori 50cc, 65cc i 110cc idealni su za uzrast 6 do 14 godina. Opremljeni su ograničivačem brzine, CE sertifikatom i automatskim ili polugomatskim menjacem. Sva vozila stižu kompletno sastavljena.' },
+    '37': { h2: 'Mini ATV kvadovi za decu — zabezbeđena vožnja za uzrast 5–14 godina', body: 'Dečiji ATV mini kvadovi 50cc i 110cc dolaze sa ograničivačem brzine, sigurnosnim prečagama i CE sertifikatom. Stabilna 4-točkovna platforma idealna je za učenje off-road vožnje. Garancija 12 meseci.' },
+    '49': { h2: 'ATV kvadovi za odrasle — snažni off-road strojevi', body: 'ATV kvadovi za odrasle 200cc–300cc sa 4x4 pogonom, hidrauličkim disk kočnicama i automatskim menjacem sa reverzom. Idealni za terenske radove, lov, rekreaciju i adrenalinsku vožnju. EEC homologacija dostupna.' },
+    '43': { h2: 'Kros motori za odrasle — enduro i motokros do 250cc', body: 'Kros i enduro motori 125cc–250cc za off-road i terenske staze. Gasni amortizeri, disk kočnice na oba točka i racing knobby gume. CE sertifikat, garancija 18–24 meseca, autorizovani servis u Nišu.' },
+    '42': { h2: 'Bagiji za odrasle — dvosedišna off-road vozila', body: 'Bagiji 200cc–250cc sa dvosedišnom kabinom, automatskim menjacem i 4x4 opcijom. Savršeni za porodičnu rekreaciju i terenske avanture. Visoki teren i stabilna konstrukcija za svako tle.' },
+    '44': { h2: 'Moto kacige — ECE homologovane za motokros i put', body: 'Full-face i motokros kacige sa ECE 22.05 homologacijom za sve uzraste. Anti-scratch vizir, višeslojna ventilacija, veličine XXS–XXL. Garancija 24 meseca.' },
+    '45': { h2: 'Rezervni delovi za ATV i kros motore', body: 'Originalni rezervni delovi za sva vozila iz naše ponude: lanci, kočnice, elektrika, motori, filteri i još mnogo toga. Brza dostava i stručna montaža u autorizovanom servisu u Nišu.' },
+  };
+
   // Dynamic SEO per category
   useEffect(() => {
     const catSEO: Record<string, { title: string; desc: string }> = {
-      '35': { title: 'Koferi za ATV Kvad — Moto Vasić | Kutije i Torbe za ATV', desc: 'Koferi i kutije za ATV kvadove — zaštita opreme na terenu. Lako montiranje, izdržljivi materijali. Besplatna dostava za porudžbine preko 50.000 RSD.' },
-      '36': { title: 'Kros Motori za Decu — Moto Vasić | 50cc–110cc Dirt Bike', desc: 'Dečiji kros motori 50cc, 65cc i 110cc za off-road vožnju. Sigurni, pouzdani, sa CE sertifikatom. Uzrast 6–14 godina. Besplatna dostava širom Srbije.' },
-      '37': { title: 'Kvadovi za Decu — Moto Vasić | 50cc i 110cc Mini ATV Kvad', desc: 'Dečiji ATV mini kvadovi 50cc i 110cc za uzrast 5–14 godina. Ograničivač brzine, sigurnosne prečage, CE sertifikat. Kupite online uz besplatnu dostavu.' },
-      '38': { title: 'Električni Motori za Decu — Moto Vasić | Baterijski Mini Motori', desc: 'Električni motori za decu na bateriju — tihi, sigurni i zabavni. Idealni poklon za uzrast 3–10 godina. Besplatna dostava i garancija.' },
-      '39': { title: 'Skuteri 50 Kubika — Moto Vasić | Mopedi i Skuteri 50cc', desc: 'Skuteri i mopedi 50cc za grad i prigradske vožnje. Ekonomični i laki za upravljanje. Besplatna dostava i garancija do 24 meseca.' },
-      '40': { title: 'Gume za ATV i Motore — Moto Vasić | Off-Road i Terenske Gume', desc: 'Off-road i terenske gume za ATV kvadove i kros motore. Kvalitetne gume za različite terene. Besplatna dostava za porudžbine preko 50.000 RSD.' },
-      '41': { title: 'Prikolice za ATV Kvad — Moto Vasić | ATV Trailer', desc: 'Prikolice za ATV kvadove — idealne za transport opreme i tereta po terenu. Čelična konstrukcija, lako kačenje. Naručite online uz besplatnu dostavu.' },
-      '42': { title: 'Skuteri 125 Kubika — Moto Vasić | Homologovani Putni Skuteri', desc: 'Skuteri 125cc sa EEC homologacijom za drumski saobraćaj. Ekonomični, pouzdani i laki za vožnju. Besplatna dostava i garancija do 24 meseca.' },
-      '43': { title: 'Kros Motori za Odrasle — Moto Vasić | 125cc–250cc Enduro', desc: 'Kros i enduro motori za odrasle 125cc do 250cc. Idealni za off-road i terenske staze. Garancija, servis i rezervni delovi dostupni. Naručite online.' },
-      '44': { title: 'Moto Kacige — Moto Vasić | ECE Homologovane Kacige za Motore', desc: 'Full-face i motokros kacige sa ECE 22.05 homologacijom. Zaštita za sve uzraste. Proverite ponudu online uz besplatnu dostavu.' },
-      '45': { title: 'Rezervni Delovi za ATV i Motore — Moto Vasić | Srbija', desc: 'Originalni rezervni delovi za ATV kvadove, kros motore i skutere. Lanci, kočnice, elektrika i motori. Brza dostava i autorizovani servis.' },
-      '46': { title: 'Gume za ATV i Moto Vozila — Moto Vasić | Off-Road Gume', desc: 'Off-road i terenske gume za ATV kvadove i kros motore. Kvalitetne gume za različite terene. Besplatna dostava za porudžbine preko 50.000 RSD.' },
-      '47': { title: 'Moto Zaštitna Oprema — Moto Vasić | Prsluk, Naramice, Rukavice', desc: 'Zaštitna moto oprema: prsluk, naramice, rukavice i čizme za motokros i off-road. CE sertifikat. Kompletan asortiman za decu i odrasle.' },
-      '48': { title: 'Moto Dodaci i Oprema — Moto Vasić | Aksesori za ATV i Motore', desc: 'Moto dodaci i aksesori za ATV kvadove, kros motore i skutere. Rukohvati, nosači, zaštitna oprema i još mnogo toga. Naručite online.' },
-      '49': { title: 'Električni Skuteri — Moto Vasić | E-Skuteri za Grad i Suburbu', desc: 'Električni skuteri za grad i prigradske vožnje. Tihi, ekonomični i ekološki. Besplatna dostava i garancija. Pogledajte ponudu online.' },
+      '35': { title: 'Koferi za ATV Kvad — Moto Vasić | Kutije i Torbe za ATV', desc: 'Koferi i kutije za ATV kvadove — zaštita opreme na terenu. Lako montiranje, izdržljivi materijali. Plaćanje pouzećem, isporuka 2-5 radnih dana.' },
+      '36': { title: 'Kros Motori za Decu — Moto Vasić | 50cc–110cc Dirt Bike', desc: 'Dečiji kros motori 50cc, 65cc i 110cc za off-road vožnju. Sigurni, pouzdani, sa CE sertifikatom. Uzrast 6–14 godina. Plaćanje pouzećem, garancija 12 meseci.' },
+      '37': { title: 'Kvadovi za Decu — Moto Vasić | 50cc i 110cc Mini ATV Kvad', desc: 'Dečiji ATV mini kvadovi 50cc i 110cc za uzrast 5–14 godina. Ograničivač brzine, sigurnosne prečage, CE sertifikat. Plaćanje pouzećem, servis i rezervni delovi.' },
+      '38': { title: 'Električni Motori za Decu — Moto Vasić | Baterijski Mini Motori', desc: 'Električni motori za decu na bateriju — tihi, sigurni i zabavni. Idealni poklon za uzrast 3–10 godina. Garancija i autorizovani servis u Nišu.' },
+      '39': { title: 'Skuteri 50 Kubika — Moto Vasić | Mopedi i Skuteri 50cc', desc: 'Skuteri i mopedi 50cc za grad i prigradske vožnje. Ekonomični i laki za upravljanje. Plaćanje pouzećem, garancija do 24 meseca.' },
+      '40': { title: 'Gume za ATV i Motore — Moto Vasić | Off-Road i Terenske Gume', desc: 'Off-road i terenske gume za ATV kvadove i kros motore. Kvalitetne gume za različite terene. Plaćanje pouzećem, dostava 2-5 radnih dana.' },
+      '41': { title: 'Prikolice za ATV Kvad — Moto Vasić | ATV Trailer', desc: 'Prikolice za ATV kvadove — idealne za transport opreme i tereta po terenu. Čelična konstrukcija, lako kačenje. Plaćanje pouzećem, dostava širom Srbije.' },
+      '42': { title: 'Skuteri 125 Kubika — Moto Vasić | Homologovani Putni Skuteri', desc: 'Skuteri 125cc sa EEC homologacijom za drumski saobraćaj. Ekonomični, pouzdani i laki za vožnju. Plaćanje pouzećem, garancija do 24 meseca.' },
+      '43': { title: 'Kros Motori za Odrasle — Moto Vasić | 125cc–250cc Enduro', desc: 'Kros i enduro motori za odrasle 125cc do 250cc. Idealni za off-road i terenske staze. Garancija, autorizovani servis i rezervni delovi dostupni. Naručite online.' },
+      '44': { title: 'Moto Kacige — Moto Vasić | ECE Homologovane Kacige za Motore', desc: 'Full-face i motokros kacige sa ECE 22.05 homologacijom. Zaštita za sve uzraste. Plaćanje pouzećem, dostava 2-5 radnih dana, garancija.' },
+      '45': { title: 'Rezervni Delovi za ATV i Motore — Moto Vasić | Srbija', desc: 'Originalni rezervni delovi za ATV kvadove, kros motore i skutere. Lanci, kočnice, elektrika i motori. Brza dostava i autorizovani servis u Nišu.' },
+      '46': { title: 'Gume za ATV i Moto Vozila — Moto Vasić | Off-Road Gume', desc: 'Off-road i terenske gume za ATV kvadove i kros motore. Kvalitetne gume za različite terene. Plaćanje pouzećem, dostava 2-5 radnih dana.' },
+      '47': { title: 'Moto Zaštitna Oprema — Moto Vasić | Prsluk, Naramice, Rukavice', desc: 'Zaštitna moto oprema: prsluk, naramice, rukavice i čizme za motokros i off-road. CE sertifikat. Kompletan asortiman za decu i odrasle — naručite online.' },
+      '48': { title: 'Moto Dodaci i Oprema — Moto Vasić | Aksesori za ATV i Motore', desc: 'Moto dodaci i aksesori za ATV kvadove, kros motore i skutere. Rukohvati, nosači, zaštitna oprema i još mnogo toga. Plaćanje pouzećem.' },
+      '49': { title: 'Električni Skuteri — Moto Vasić | E-Skuteri za Grad i Suburbu', desc: 'Električni skuteri za grad i prigradske vožnje. Tihi, ekonomični i ekološki. Garancija i autorizovani servis. Pogledajte ponudu online.' },
     };
     const seo = selectedCategory ? catSEO[selectedCategory] : null;
     document.title = seo ? seo.title : 'Prodavnica — Moto Vasić | ATV Kvadovi, Kros Motori, Bagiji, Skuteri';
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', seo ? seo.desc : 'Kompletna ponuda ATV kvadova, kros motora, bagija, skutera i moto opreme za decu i odrasle. Besplatna dostava, plaćanje pouzećem, garancija do 24 meseca.');
+    if (meta) meta.setAttribute('content', seo ? seo.desc : 'Kompletna ponuda ATV kvadova, kros motora, bagija, skutera i moto opreme za decu i odrasle. Plaćanje pouzećem, garancija do 24 meseca, autorizovani servis u Nišu.');
   }, [selectedCategory]);
 
   // Client-side filtering by attributes + search
@@ -341,6 +351,14 @@ export default function Shop() {
                   reviewCount={6 + i * 4}
                 />
               ))}
+            </div>
+          )}
+
+          {/* SEO text per category */}
+          {selectedCategory && catSEOText[selectedCategory] && (
+            <div className="mt-12 pt-10 border-t border-gray-100 max-w-3xl">
+              <h2 className="text-xl font-bold text-gray-800 mb-3">{catSEOText[selectedCategory].h2}</h2>
+              <p className="text-[13px] text-gray-500 leading-relaxed">{catSEOText[selectedCategory].body}</p>
             </div>
           )}
         </div>

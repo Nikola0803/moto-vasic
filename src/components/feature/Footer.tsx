@@ -55,11 +55,11 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-5 text-[13px] tracking-wide uppercase">Dodatne pogodnosti:</h4>
             <ul className="space-y-3 text-[13px] text-gray-400">
               {[
-                'Plaćanje na 12 rata uz Intesa karticu',
-                'Plaćanje čekovima građana do 12 meseci',
                 'Radimo javna preduzeća',
-                'Besplatna dostava preko 50.000 RSD',
-                'Dodatnih 3% popusta za keš',
+                'Plaćanje pouzećem za celu Srbiju',
+                'Garancija do 24 meseca',
+                'Autorizovani servis u Nišu',
+                'Besplatan prvi servis (30 dana)',
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2">
                   <i className="ri-check-line text-brand-400 text-xs mt-0.5 shrink-0" />
