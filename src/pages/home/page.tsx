@@ -150,7 +150,7 @@ function HorizontalCarousel({ title, subtitle, products, viewAllLink }: { title:
 
 export default function Home() {
   const { t } = useTranslation('common');
-  const [productsByCat, setProductsByCat] = useState<Record<number, Product[]>>();
+  const [productsByCat, setProductsByCat] = useState<Record<number, Product[]>>({});
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
