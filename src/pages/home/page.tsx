@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/lib/supabase';
+import { fetchWithCache } from '@/lib/cache';
 import Layout from '@/components/feature/Layout';
 import ProductCard from '@/components/feature/ProductCard';
 import StarRating from '@/components/feature/StarRating';
@@ -166,50 +167,40 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    async function fetchAll() {
-      setLoading(true);
+    interface HomeData { products: Product[]; cats: { id: number; name: string; image: string | null }[] }
 
-      const { data: allProducts } = await supabase
-        .from('product_items')
-        .select('*, product_categories(id, name)')
-        .eq('status', 'active').limit(5000)
-        .order('created_at', { ascending: false });
-
-      if (allProducts) {
+    fetchWithCache<HomeData>(
+      'mv:home:v1',
+      async () => {
+        const [{ data: products }, { data: cats }] = await Promise.all([
+          supabase.from('product_items').select('*, product_categories(id, name)').eq('status', 'active').limit(5000).order('created_at', { ascending: false }),
+          supabase.from('product_categories').select('id, name, image').is('parent_id', null).order('sort_order'),
+        ]);
+        return { products: (products || []) as Product[], cats: cats || [] };
+      },
+      ({ products, cats }) => {
         const byCat: Record<number, Product[]> = {};
-        allProducts.forEach((p) => {
-          const catId = p.category_id;
+        products.forEach((p) => {
+          const catId = (p as any).category_id;
           if (!byCat[catId]) byCat[catId] = [];
-          byCat[catId].push(p as Product);
+          byCat[catId].push(p);
         });
         setProductsByCat(byCat);
-      }
 
-      // Dinamički učitaj root kategorije (parent_id IS NULL)
-      const { data: cats } = await supabase
-        .from('product_categories')
-        .select('id, name, image')
-        .is('parent_id', null)
-        .order('sort_order');
-
-      if (cats) {
         const counts: Record<number, number> = {};
-        (allProducts || []).forEach((p) => {
-          if (p.category_id) counts[p.category_id] = (counts[p.category_id] || 0) + 1;
+        products.forEach((p) => {
+          const catId = (p as any).category_id;
+          if (catId) counts[catId] = (counts[catId] || 0) + 1;
         });
-
-        setCategories(
-          cats.map((c) => ({
-            id: c.id,
-            name: c.name,
-            image: c.image || CAT_IMAGES[c.id] || '',
-            count: counts[c.id] || 0,
-          }))
-        );
+        setCategories(cats.map((c) => ({
+          id: c.id,
+          name: c.name,
+          image: c.image || CAT_IMAGES[c.id] || '',
+          count: counts[c.id] || 0,
+        })));
+        setLoading(false);
       }
-      setLoading(false);
-    }
-    fetchAll();
+    ).catch(() => setLoading(false));
   }, []);
 
   const handleFilter = () => {

@@ -6,7 +6,7 @@ const supabaseServiceKey = import.meta.env.VITE_SUPABASE_SERVICE_KEY;
 
 // Use service key if available, fallback to anon key
 const adminClient = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey, {
-  auth: { persistSession: false },
+  auth: { persistSession: false, storageKey: 'sb-admin-auth' },
 });
 
 export async function adminApi(

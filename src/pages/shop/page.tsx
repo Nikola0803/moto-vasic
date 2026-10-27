@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/lib/supabase';
+import { fetchWithCache } from '@/lib/cache';
 import Layout from '@/components/feature/Layout';
 import ProductCard from '@/components/feature/ProductCard';
 
@@ -39,73 +40,65 @@ export default function Shop() {
   const selectedCategory = searchParams.get('kategorija');
   const searchQuery = searchParams.get('pretraga');
 
-  // Load only categories that have products
+  // Fetch all data once, cache it, filter client-side
+  const [masterProducts, setMasterProducts] = useState<Product[]>([]);
+
   useEffect(() => {
-    async function fetchCategories() {
-      const { data: cats } = await supabase
-        .from('product_categories')
-        .select('id, name, parent_id')
-        .order('name');
+    interface ShopData { products: Product[]; cats: Category[] }
 
-      const { data: prods } = await supabase
-        .from('product_items')
-        .select('category_id')
-        .eq('status', 'active').limit(5000);
+    fetchWithCache<ShopData>(
+      'mv:shop:v1',
+      async () => {
+        const [{ data: products }, { data: cats }] = await Promise.all([
+          supabase.from('product_items').select('*, product_categories(id, name)').eq('status', 'active').limit(5000).order('created_at', { ascending: false }),
+          supabase.from('product_categories').select('id, name, parent_id').order('name'),
+        ]);
+        return { products: (products || []) as Product[], cats: (cats || []) as Category[] };
+      },
+      ({ products, cats }) => {
+        setMasterProducts(products);
 
-      if (!cats || !prods) return;
+        const counts: Record<number, number> = {};
+        products.forEach((p) => {
+          const catId = (p as any).category_id;
+          if (catId) counts[catId] = (counts[catId] || 0) + 1;
+        });
 
-      const counts: Record<number, number> = {};
-      prods.forEach((p) => {
-        if (p.category_id) counts[p.category_id] = (counts[p.category_id] || 0) + 1;
-      });
+        const withProducts = cats
+          .filter((c) => (counts[c.id] || 0) > 0)
+          .map((c) => ({ ...c, _count: counts[c.id] || 0 }))
+          .sort((a, b) => (b._count || 0) - (a._count || 0));
 
-      const withProducts = cats
-        .filter((c) => (counts[c.id] || 0) > 0)
-        .map((c) => ({ ...c, _count: counts[c.id] || 0 }))
-        .sort((a, b) => (b._count || 0) - (a._count || 0));
-
-      setCategories(withProducts);
-    }
-    fetchCategories();
+        setCategories(withProducts);
+        setLoading(false);
+      }
+    ).catch(() => setLoading(false));
   }, []);
 
-  const fetchProducts = useCallback(async () => {
-    setLoading(true);
-
-    let query = supabase
-      .from('product_items')
-      .select('*, product_categories(id, name)')
-      .eq('status', 'active').limit(5000);
+  const fetchProducts = useCallback(() => {
+    let loaded = [...masterProducts];
 
     if (selectedCategory) {
-      query = query.eq('category_id', selectedCategory);
+      loaded = loaded.filter((p) => String((p as any).category_id) === selectedCategory);
     }
-
     if (searchQuery) {
-      query = query.ilike('name', '%' + searchQuery + '%');
+      const q = searchQuery.toLowerCase();
+      loaded = loaded.filter((p) => p.name.toLowerCase().includes(q));
     }
-
     if (sortBy === 'price_asc') {
-      query = query.order('price', { ascending: true });
+      loaded = [...loaded].sort((a, b) => a.price - b.price);
     } else if (sortBy === 'price_desc') {
-      query = query.order('price', { ascending: false });
-    } else {
-      query = query.order('created_at', { ascending: false });
+      loaded = [...loaded].sort((a, b) => b.price - a.price);
     }
 
-    const { data } = await query;
-    const loaded = (data || []) as Product[];
     setAllProducts(loaded);
 
-    // Extract filter options from attributes
     const sizes = new Set<string>();
     const brands = new Set<string>();
     loaded.forEach((p) => {
       if (p.attributes) {
-        if (p.attributes['Velicina'] || p.attributes['Veličina']) {
-          const sizeStr = p.attributes['Veličina'] || p.attributes['Velicina'] || '';
-          sizeStr.split(',').forEach((s: string) => { if (s.trim()) sizes.add(s.trim()); });
-        }
+        const sizeStr = p.attributes['Veličina'] || p.attributes['Velicina'] || '';
+        sizeStr.split(',').forEach((s: string) => { if (s.trim()) sizes.add(s.trim()); });
         if (p.attributes['Brend']) brands.add(p.attributes['Brend'].trim());
       }
     });
@@ -113,8 +106,7 @@ export default function Shop() {
     setAvailableBrands(Array.from(brands).sort());
     setFilterSize('');
     setFilterBrand('');
-    setLoading(false);
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [masterProducts, selectedCategory, searchQuery, sortBy]);
 
   useEffect(() => {
     fetchProducts();
