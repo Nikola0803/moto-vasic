@@ -75,6 +75,8 @@ export default function About() {
               <img
                 src="https://readdy.ai/api/search-image?query=A%20modern%20motorsport%20showroom%20interior%20displaying%20rugged%20ATV%20quad%20bikes%2C%20red%20off-road%20buggies%2C%20mini%20cross%20motorcycles%20and%20scooters%20arranged%20in%20rows%2C%20industrial%20concrete%20floor%20with%20warm%20ambient%20lighting%2C%20professional%20commercial%20interior%20photography%20with%20rich%20earthy%20tones%2C%20premium%20retail%20environment%20for%20motor%20vehicles%2C%20no%20people&width=600&height=500&seq=moto-about&orientation=landscape"
                 alt="Moto Vasić prodavnica"
+                loading="lazy"
+                decoding="async"
                 className="w-full rounded-2xl object-cover aspect-[4/3]"
               />
             </div>

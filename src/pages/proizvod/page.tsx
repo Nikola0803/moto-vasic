@@ -295,6 +295,7 @@ export default function ProductDetail() {
                 <img
                   src={allImages[activeImage]?.url}
                   alt={product.name}
+                  decoding="async"
                   className="w-full aspect-square object-contain object-center"
                 />
               </div>
@@ -308,7 +309,7 @@ export default function ProductDetail() {
                         idx === activeImage ? 'border-brand-500 shadow-sm' : 'border-transparent hover:border-gray-200'
                       }`}
                     >
-                      <img src={img.url} alt="" className="w-full h-full object-contain object-center" />
+                      <img src={img.url} alt="" loading="lazy" decoding="async" className="w-full h-full object-contain object-center" />
                     </button>
                   ))}
                 </div>

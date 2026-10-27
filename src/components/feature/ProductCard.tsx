@@ -50,6 +50,8 @@ export default function ProductCard({
               <img
                 src={product.media?.[0]?.url}
                 alt={product.name}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
               />
             </div>
@@ -101,6 +103,8 @@ export default function ProductCard({
           <img
             src={product.media?.[0]?.url}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-110"
           />
         </div>
