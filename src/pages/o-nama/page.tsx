@@ -67,7 +67,7 @@ export default function About() {
                   Sva vozila u našoj ponudi dolaze isključivo od proverenih proizvođača kao što su Tao Motor, sa punim CE i EEC sertifikatima. Verujemo da kupci zaslužuju potpuni mir uma kada kupuju moto vozilo — bilo da je reč o prvom kros motoru za dete ili snažnom ATV kvadu za odrasle.
                 </p>
                 <p>
-                  Nudimo plaćanje pouzećem širom Srbije, besplatnu dostavu za porudžbine preko 50.000 RSD, garanciju do 2 godine i sopstveni autorizovani servis. Naš tim je tu da vam pomogne pri odabiru pravog vozila za vaše potrebe i budžet.
+                  Nudimo plaćanje pouzećem širom Srbije, garanciju do 2 godine i sopstveni autorizovani servis u Nišu. Naš tim je tu da vam pomogne pri odabiru pravog vozila za vaše potrebe i budžet.
                 </p>
               </div>
             </div>
@@ -93,8 +93,8 @@ export default function About() {
               {[
                 { icon: 'ri-verified-badge-line', title: 'Originalni proizvodi', desc: 'Samo provereni brendovi kao Tao Motor sa CE i EEC sertifikatima. Bez kopija, bez kompromisa.' },
                 { icon: 'ri-shield-check-line', title: 'Sigurnost na prvom mestu', desc: 'Sva vozila ispunjavaju evropske bezbednosne standarde. Detaljno testirana pre prodaje.' },
-                { icon: 'ri-truck-line', title: 'Dostava širom Srbije', desc: '2-5 radnih dana. Besplatna dostava za porudžbine preko 50.000 RSD.' },
-                { icon: 'ri-hand-coin-line', title: 'Plaćanje pouzećem', desc: 'Platite prilikom preuzimanja. Bez rizika, bez stresa. Dodatnih 3% popusta za keš.' },
+                { icon: 'ri-truck-line', title: 'Dostava širom Srbije', desc: '2-5 radnih dana. Vozila stižu kompletno sastavljena i testirana, odmah spremna za vožnju.' },
+                { icon: 'ri-hand-coin-line', title: 'Plaćanje pouzećem', desc: 'Platite pri preuzimanju — bez rizika. Prihvatamo i plaćanje karticom online.' },
                 { icon: 'ri-tools-line', title: 'Servis i rezervni delovi', desc: 'Sopstveni autorizovani servis i velika ponuda rezervnih delova. Besplatan prvi servis.' },
                 { icon: 'ri-customer-service-2-line', title: 'Stručna podrška', desc: 'Pomažemo vam da odaberete idealno vozilo — bilo da ste početnik ili iskusni vozač.' },
               ].map((item) => (

@@ -75,8 +75,8 @@ const testimonials = [
 
 const faqs = [
   { q: 'Da li moto vozila imaju homologaciju za drumski saobraćaj?', a: 'Sva cestovna vozila (skuteri, ATV 4x4 sa homologacijom) dolaze sa EEC homologacijom i mogu se registrovati. Kros motori i bagiji su namenjeni isključivo za off-road i privatne površine, osim ako posebno nije naznačeno da imaju homologaciju. Detaljne informacije o homologaciji možete pronaći u opisu svakog proizvoda.' },
-  { q: 'Koliko traje isporuka moto vozila?', a: 'Isporuka širom Srbije traje 2-5 radnih dana. Za Beograd i okolinu obično 1-2 dana. Besplatna dostava za porudžbine preko 50.000 RSD. Moto vozila stižu kompletno sastavljena, spremna za vožnju.' },
-  { q: 'Da li mogu platiti pouzećem i da li postoji popust za keš?', a: 'Da! Plaćanje pouzećem prilikom preuzimanja je dostupno za celu Srbiju. Takođe možete platiti karticom online ili u radnji. Za plaćanje u kešu dodatnih 3% popusta na celokupnu ponudu.' },
+  { q: 'Koliko traje isporuka moto vozila?', a: 'Isporuka širom Srbije traje 2-5 radnih dana. Za Beograd i okolinu obično 1-2 dana. Moto vozila stižu kompletno sastavljena i testirana, spremna za vožnju odmah po preuzimanju.' },
+  { q: 'Da li mogu platiti pouzećem?', a: 'Da! Plaćanje pouzećem prilikom preuzimanja je dostupno za celu Srbiju. Takođe možete platiti karticom online ili u radnji u Nišu.' },
   { q: 'Da li vršite servis i imate rezervne delove?', a: 'Da, imamo sopstveni autorizovani servis u Smederevu i veliku ponudu rezervnih delova za sva vozila iz naše ponude — od guma i lanaca do motora i elektrike. Svaki kupac dobija besplatan prvi servis u roku od 30 dana od kupovine.' },
   { q: 'Koji je uzrast za dečije kros motore i mini ATV kvadove?', a: 'Mini ATV kvadovi 50cc su namenjeni deci od 5-8 godina, mini ATV 110cc za 8-14 godina. Kros motori 50cc za 6-10 godina, 65cc za 8-12 godina, a 110cc za 10-14 godina. Sva dečija vozila imaju ograničivač brzine, sigurnosne prečage i CE sertifikat.' },
   { q: 'Da li je zaštitna oprema obavezna i šta preporučujete?', a: 'Kaciga je zakonom obavezna za svaku vožnju moto vozila na drumu, a mi je preporučujemo i za off-road. Za motokros i off-road preporučujemo i zaštitni prsluk, naramenice, rukavice i čizme. Sva oprema u našoj ponudi ima ECE 22.05 homologaciju.' },
@@ -162,7 +162,7 @@ export default function Home() {
   useEffect(() => {
     document.title = 'Moto Vasić | ATV Kvadovi, Kros Motori, Bagiji i Skuteri — Srbija';
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', 'Moto Vasić — stručna prodaja ATV kvadova, kros motora, bagija i skutera za decu i odrasle. Besplatna dostava, plaćanje pouzećem, garancija do 24 meseca. Autorizovani servis u Smederevu.');
+    if (meta) meta.setAttribute('content', 'Moto Vasić — stručna prodaja ATV kvadova, kros motora, bagija i skutera za decu i odrasle. Plaćanje pouzećem, garancija do 24 meseca, autorizovani servis u Nišu. Tao Motor ovlašćeni distributer za Srbiju.');
   }, []);
 
   useEffect(() => {
@@ -198,11 +198,8 @@ export default function Home() {
           if (p.category_id) counts[p.category_id] = (counts[p.category_id] || 0) + 1;
         });
 
-        // Prikaži samo kategorije sa proizvodima
-        const catsWithProducts = cats.filter((c) => counts[c.id] > 0);
-
         setCategories(
-          catsWithProducts.map((c) => ({
+          cats.map((c) => ({
             id: c.id,
             name: c.name,
             image: c.image || CAT_IMAGES[c.id] || '',
@@ -250,9 +247,15 @@ export default function Home() {
               </Link>
               <Link
                 to="/shop?kategorija=37"
-                className="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 py-3 rounded-lg transition-all text-[13px] whitespace-nowrap tracking-wide"
+                className="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-lg transition-all text-[13px] whitespace-nowrap tracking-wide border border-white/30"
               >
-                ATV Kvad za decu
+                Kvadovi za decu
+              </Link>
+              <Link
+                to="/shop?kategorija=36"
+                className="bg-white/20 hover:bg-white/30 text-white font-bold px-6 py-3 rounded-lg transition-all text-[13px] whitespace-nowrap tracking-wide border border-white/30"
+              >
+                Kros motori za decu
               </Link>
             </div>
           </div>
@@ -420,15 +423,15 @@ export default function Home() {
                 </Link>
               </div>
               <p className="mt-4 text-[13px] text-brand-400 font-semibold">
-                Dodatnih 3% popusta na plaćanje u kešu!
+                Plaćanje pouzećem — platite tek kada vozilo stigne!
               </p>
             </div>
             <div className="hidden lg:block">
               <div className="space-y-4">
                 {[
                   { icon: 'ri-verified-badge-line', title: 'Originalni proizvodi', desc: 'Sva vozila dolaze od proverenih proizvođača kao što su Tao Motor, sa punom homologacijom i CE sertifikatima.' },
-                  { icon: 'ri-truck-line', title: 'Dostava na kućnu adresu', desc: 'Dostavljamo kompletno sastavljena vozila širom Srbije. Besplatna dostava za porudžbine preko 50.000 RSD.' },
-                  { icon: 'ri-hand-coin-line', title: 'Plaćanje pouzećem', desc: 'Izaberite način plaćanja koji vam odgovara. Za plaćanje u kešu dodatnih 3% popusta na celokupnu ponudu.' },
+                  { icon: 'ri-truck-line', title: 'Dostava na kućnu adresu', desc: 'Dostavljamo kompletno sastavljena i testirana vozila širom Srbije. Isporuka 2-5 radnih dana.' },
+                  { icon: 'ri-hand-coin-line', title: 'Plaćanje pouzećem', desc: 'Platite pri preuzimanju — bez rizika za kupca. Plaćanje dostupno za celu Srbiju.' },
                   { icon: 'ri-tools-line', title: 'Servis i rezervni delovi', desc: 'Imamo sopstveni autorizovani servis i veliku ponudu rezervnih delova. Besplatan prvi servis u roku od 30 dana.' },
                 ].map((item) => (
                   <div key={item.title} className="flex items-start gap-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
@@ -586,6 +589,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SEO Text Block */}
+      <section className="py-10 md:py-14 px-4 md:px-10 bg-white border-t border-gray-100">
+        <div className="max-w-[1440px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div>
+              <h2 className="text-base font-bold text-gray-800 mb-3">ATV Kvadovi i Kros Motori u Srbiji</h2>
+              <p className="text-[12px] text-gray-500 leading-relaxed">
+                Moto Vasić je ovlašćeni distributer Tao Motor za Srbiju sa više od 20 godina iskustva. U ponudi su ATV kvadovi 50cc–300cc, kros motori za decu i odrasle, bagiji, skuteri i kompletna moto oprema. Sva vozila dolaze sa CE i EEC sertifikatima, sastavljena i testirana pre isporuke.
+              </p>
+            </div>
+            <div>
+              <h2 className="text-base font-bold text-gray-800 mb-3">Dečiji Kvadovi i Kros Motori — Sigurnost na prvom mestu</h2>
+              <p className="text-[12px] text-gray-500 leading-relaxed">
+                Mini ATV kvadovi 50cc i 110cc za uzrast 5–14 godina opremljeni su ograničivačem brzine i sigurnosnim prečagama. Dečiji kros motori 50cc–110cc idealni su za uzrast od 6 godina. Sva dečija vozila imaju CE sertifikat i garanciju od 12 meseci.
+              </p>
+            </div>
+            <div>
+              <h2 className="text-base font-bold text-gray-800 mb-3">Servis, Garancija i Rezervni Delovi</h2>
+              <p className="text-[12px] text-gray-500 leading-relaxed">
+                Moto Vasić ima sopstveni autorizovani servis u Nišu i veliku ponudu originalnih rezervnih delova za sva vozila iz ponude. Svi kupci dobijaju besplatan prvi servis u roku od 30 dana od kupovine i garanciju do 24 meseca.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="py-16 md:py-24 px-4 md:px-10 bg-[#1A1A1A] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -595,7 +624,7 @@ export default function Home() {
             Spremni za <span className="text-brand-400">novu avanturu</span>?
           </h2>
           <p className="text-sm md:text-base text-white/60 mb-10 max-w-xl mx-auto leading-relaxed">
-            Preko 30 različitih modela ATV kvadova, kros motora, bagija, skutera i opreme čeka na vas. Besplatna dostava, plaćanje pouzećem, garancija do 24 meseca.
+            Preko 30 različitih modela ATV kvadova, kros motora, bagija, skutera i opreme čeka na vas. Plaćanje pouzećem, garancija do 24 meseca, autorizovani servis.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
